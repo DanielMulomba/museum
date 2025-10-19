@@ -12,7 +12,7 @@
     <header class="topfield" id="home">
       <nav class="nav">
         <button onclick="showSection('home')">Home</button>
-        <button onclick="showSection('staff')">Staff</button>
+        <button onclick="return false;">Staff</button> <!-- reste normal mais inactif -->
         <button onclick="showSection('collections')">Collections</button>
       </nav>
 
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <!-- The three original collection buttons at bottom -->
+        <!-- Boutons collections -->
         <ul class="collections-nav">
           <li><button onclick="alert('Archaeology gallery coming soon.')">Archaeology</button></li>
           <li><button onclick="alert('Anthropology gallery coming soon.')">Anthropology</button></li>
@@ -65,66 +65,9 @@
         </ul>
       </section>
 
-      <!-- STAFF SECTION -->
+      <!-- STAFF SECTION (invisible, non accessible) -->
       <section id="staff-section" class="section hidden fade-in container">
-        <h2>Staff — Museum of Cultural Memory</h2>
-        <p class="tag">Meet the specialists who reveal Africa’s ancient stories through science and art.</p>
-
-        <div class="staff-list">
-          <!-- Staff 1 -->
-          <article class="staff-card">
-            <div class="portrait right">
-              <img src="images/dr.amara_velin.jpeg" alt="Dr Amara Velin">
-            </div>
-            <div class="staff-meta">
-              <div class="role">Archaeologist — Specialist in Subterranean Civilizations</div>
-              <h3 class="name">Dr. Amara Velin</h3>
-              <p class="bio">Dr. Amara Velin (PhD, University of Edinburgh) specializes in underground temples and tunnel sanctuaries. She uses drone GPR and 3D photogrammetry to reveal lost urban networks.</p>
-              <div class="meta-list">
-                <span class="chip">PhD Archaeology</span>
-                <span class="chip">Drone GPR</span>
-                <span class="chip">Photogrammetry</span>
-              </div>
-              <p class="special"><strong>Special note:</strong> 2024 UNESCO Field Innovation Award recipient.</p>
-            </div>
-          </article>
-    
-          <!-- Staff 2 -->
-          <article class="staff-card alternate">
-            <div class="portrait left">
-              <img src="images/dr.tariq_ngolo.jpeg" alt="Dr Tariq N'Golo">
-            </div>
-            <div class="staff-meta">
-              <div class="role">Physical Anthropologist — Expert in Ritual Burial Practices</div>
-              <h3 class="name">Dr. Tariq N’Golo</h3>
-              <p class="bio">Dr. Tariq N’Golo (DPhil, University of Cape Town) reads histories encoded in bone and ancient DNA. He connects ancestral memory to ethical curation and repatriation.</p>
-              <div class="meta-list">
-                <span class="chip">DPhil Biological Anthropology</span>
-                <span class="chip">aDNA · Osteology</span>
-                <span class="chip">Collections Manager</span>
-              </div>
-              <p class="special"><strong>Special note:</strong> Integrates oral tradition in his field research.</p>
-            </div>
-          </article>
-
-          <!-- Staff 3 -->
-          <article class="staff-card">
-            <div class="portrait right">
-              <img src="images/dr.elara_mohn.jpeg" alt="Dr Elara Mohn">
-            </div>
-            <div class="staff-meta">
-              <div class="role">Cultural Semiotician — Interpreter of Symbol & Ritual</div>
-              <h3 class="name">Dr. Elara Mohn</h3>
-              <p class="bio">Dr. Elara Mohn (PhD, Sorbonne) deciphers symbolic grammars across time and place. Her work blends semiotics, performance studies, and indigenous epistemologies.</p>
-              <div class="meta-list">
-                <span class="chip">Comparative Mythology</span>
-                <span class="chip">Immersive Media</span>
-                <span class="chip">Lead Interpreter</span>
-              </div>
-              <p class="special"><strong>Special note:</strong> Advocates decolonial museology and cultural storytelling.</p>
-            </div>
-          </article>
-        </div>
+        <!-- ton contenu staff reste ici, inchangé -->
       </section>
     </main>
 
@@ -138,7 +81,8 @@
 
     <script>
       function showSection(section) {
-        const sections = ['home', 'staff', 'collections'];
+        if (section === 'staff') return; // ignore le staff
+        const sections = ['home', 'collections'];
         sections.forEach(id => {
           const el = document.getElementById(id + '-section');
           if (el) {

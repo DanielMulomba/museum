@@ -56,6 +56,13 @@
             <p>Learn how drones, DNA, and 3D scanning are reshaping our understanding of the past.</p>
           </div>
         </div>
+
+        <!-- The three original collection buttons at bottom -->
+        <ul class="collections-nav">
+          <li><button onclick="alert('Archaeology gallery coming soon.')">Archaeology</button></li>
+          <li><button onclick="alert('Anthropology gallery coming soon.')">Anthropology</button></li>
+          <li><button onclick="alert('History gallery coming soon.')">History</button></li>
+        </ul>
       </section>
 
       <!-- STAFF SECTION -->
@@ -119,16 +126,6 @@
           </article>
         </div>
       </section>
-
-      <!-- COLLECTIONS SECTION -->
-      <section id="collections-section" class="section hidden fade-in container">
-        <h2>Collections Navigation</h2>
-        <ul class="collections-nav">
-          <li><button onclick="alert('Archaeology gallery coming soon.')">Archaeology</button></li>
-          <li><button onclick="alert('Anthropology gallery coming soon.')">Anthropology</button></li>
-          <li><button onclick="alert('History gallery coming soon.')">History</button></li>
-        </ul>
-      </section>
     </main>
 
     <footer class="bottomfield">
@@ -144,12 +141,16 @@
         const sections = ['home', 'staff', 'collections'];
         sections.forEach(id => {
           const el = document.getElementById(id + '-section');
-          el.classList.remove('visible');
-          el.classList.add('hidden');
+          if (el) {
+            el.classList.remove('visible');
+            el.classList.add('hidden');
+          }
         });
         const active = document.getElementById(section + '-section');
-        active.classList.remove('hidden');
-        active.classList.add('visible');
+        if (active) {
+          active.classList.remove('hidden');
+          active.classList.add('visible');
+        }
       }
     </script>
   </body>

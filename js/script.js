@@ -1,8 +1,8 @@
 function showSection(section) {
-  const sections = ['home', 'staff', 'collections'];
+  const sections = ['home', 'staff', 'collections', 'shop'];
   const subNav = document.getElementById('sub-nav');
 
-  // Masquer toutes les sections
+  // Hide sections
   sections.forEach(id => {
     const el = document.getElementById(id + '-section');
     if (el) {
@@ -11,17 +11,17 @@ function showSection(section) {
     }
   });
 
-  // Afficher la section choisie
+  // Display the selected section
   const active = document.getElementById(section + '-section');
   if (active) {
     active.classList.remove('hidden');
     active.classList.add('visible');
   }
 
-  // Sous-nav visible seulement dans Collections
+  // Sub-nav
   if (section === 'collections') {
     subNav.classList.remove('hidden');
-    // charger Archaeology par défaut
+    // load archeology by default
     showCollectionInfo('archaeology');
   } else {
     subNav.classList.add('hidden');
@@ -29,9 +29,9 @@ function showSection(section) {
 }
 
 
-/* Insère le HTML complet pour chaque artefact (tous les champs) */
+/* Artifact */
 function artifactHTML(imgSrc, imgAlt, data) {
-  // data : objet contenant les champs requis
+  // data 
   return `
   <article class="artifact">
     <div class="artifact-image">
@@ -58,7 +58,7 @@ function artifactHTML(imgSrc, imgAlt, data) {
   `;
 }
 
-/* Données complètes pour les 6 artefacts */
+/* artifact information */
 const artifactsData = {
   archaeology: [
     {
@@ -215,7 +215,7 @@ const artifactsData = {
   ]
 };
 
-/* Remplit la section "Collections" selon le topic choisi */
+/* show archeology in collection  */
 function showCollectionInfo(topic) {
   const infoDiv = document.getElementById('collection-info');
   let html = '';
@@ -239,7 +239,7 @@ function showCollectionInfo(topic) {
 
 function showCollectionInfo(category) {
   const container = document.getElementById('collection-info');
-  container.innerHTML = ''; // vider avant d’ajouter le nouveau contenu
+  container.innerHTML = ''; // empty recycle
 
   if (!artifactsData[category]) return;
 
@@ -249,3 +249,30 @@ function showCollectionInfo(category) {
     container.innerHTML += artifactHTML(item.img, item.alt, item.data);
   });
 }
+
+// === MODAL LOGIC ===
+function openModal(imgSrc, title, desc) {
+  const modal = document.getElementById('item-modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDesc = document.getElementById('modal-desc');
+
+  modalImg.src = imgSrc;
+  modalTitle.textContent = title;
+  modalDesc.textContent = desc;
+
+  modal.classList.remove('hidden');
+}
+
+function closeModal() {
+  const modal = document.getElementById('item-modal');
+  modal.classList.add('hidden');
+}
+
+// optional: close modal when clicking outside content
+window.onclick = function(e) {
+  const modal = document.getElementById('item-modal');
+  if (e.target === modal) {
+    closeModal();
+  }
+};

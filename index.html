@@ -16,10 +16,10 @@
         <button onclick="showSection('home')">Home</button>
         <button onclick="showSection('staff')">Staff</button>
         <button onclick="showSection('collections')">Collections</button>
-        <button onclick="showSection('Login')">Login</button>
+        <button onclick="showSection('shop')">Shop</button>
       </div>
 
-      <!-- sous-navigation : visible seulement dans Collections -->
+      <!-- sub-navigation hiddden -->
       <div class="sub-nav hidden" id="sub-nav">
         <button onclick="showCollectionInfo('archaeology')">Archaeology</button>
         <button onclick="showCollectionInfo('anthropology')">Anthropology</button>
@@ -94,13 +94,68 @@
       <p>The content in this gallery was entirely created by AI under human direction. It was then curated, reviewed and edited by a human being published.</p>
 
       <div id="collection-info" class="collection-info">
-        <!-- contenu injecté par JS -->
+        <!-- JS -->
       </div>
     </section>
 
-        <!-- contenu injecté par JS -->
+        <!-- JS -->
       </div>
     </section>
+
+    <!-- SHOP -->
+<section id="shop-section" class="section hidden fade-in container">
+  <h1>Souvenir Shop</h1>
+  <p class="tag">The content in this shop was entirely created by AI under human direction. It was then curated, reviewed and edited by a human before being published.</p>
+
+  <div class="shop-container">
+
+    <!-- ITEM 1 -->
+    <div class="souvenir-item" data-id="item001">
+      <img src="images/shop/mask_replica.jpeg" alt="Replica Fang Ritual Mask" title="Fang Mask Replica" onclick="openModal('images/shop/mask_replica.jpeg')">
+      <h3>Fang Mask Replica</h3>
+      <p>Inspired by the <em>Fang Ritual Mask (Gabon)</em> — hand-carved wood, matte finish.</p>
+      <p class="price">$39.99</p>
+      <button onclick="addToCart('item001', 'Fang Mask Replica', 39.99)">Add to Cart</button>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div class="souvenir-item" data-id="item002">
+      <img src="images/shop/serpent_dagger.jpeg" alt="Bronze Serpent Dagger" title="Mycenaean Serpent Dagger" onclick="openModal('images/shop/serpent_dagger.jpeg')">
+      <h3>Bronze Serpent Dagger</h3>
+      <p>Replica of the <em>Mycenaean Serpent Dagger</em> — cast bronze, aged patina.</p>
+      <p class="price">$54.99</p>
+      <button onclick="addToCart('item002', 'Bronze Serpent Dagger', 54.99)">Add to Cart</button>
+    </div>
+
+    <!-- ITEM 3 -->
+    <div class="souvenir-item" data-id="item003">
+      <img src="images/shop/nazca_vase.jpeg" alt="Nazca Ceramic Vase" title="Nazca Ritual Vase" onclick="openModal('images/shop/nazca_vase.jpeg')">
+      <h3>Nazca Ceramic Vase</h3>
+      <p>Inspired by the <em>Nazca Ceremonial Vase</em> — hand-painted clay, made in Peru.</p>
+      <p class="price">$29.99</p>
+      <button onclick="addToCart('item003', 'Nazca Ceramic Vase', 29.99)">Add to Cart</button>
+    </div>
+
+    <!-- ITEM 4 -->
+    <div class="souvenir-item" data-id="item004">
+      <img src="images/shop/funerary_tapestry.jpeg" alt="Paracas Tapestry Replica" title="Paracas Tapestry" onclick="openModal('images/shop/funerary_tapestry.jpeg')">
+      <h3>Paracas Tapestry Replica</h3>
+      <p>Inspired by the <em>Paracas Funerary Tapestry</em> — fine woven textile reproduction.</p>
+      <p class="price">$59.99</p>
+      <button onclick="addToCart('item004', 'Paracas Tapestry Replica', 59.99)">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<!--  MODAL -->
+<div id="item-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="" alt="">
+    <p id="modal-caption"></p>
+  </div>
+</div>
   </main>
 
   <footer class="bottomfield">
@@ -108,6 +163,16 @@
       <p>This is a fictitious website created for academic purposes. The content was conceived by a human and developed with AI assistance.</p>
     </div>
   </footer>
+
+  <!-- Modal image preview -->
+<div id="item-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="" alt="">
+    <h2 id="modal-title"></h2>
+    <p id="modal-desc"></p>
+  </div>
+</div>
 
   <script src="js/script.js"></script>
 </body>

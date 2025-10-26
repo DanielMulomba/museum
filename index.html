@@ -1,157 +1,114 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Daniel Mulomba — Museum of Cultural Memory</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daniel Mulomba — Museum of Cultural Memory</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/style.css">
+ 
+</head>
+<body>
 
-    <header class="topfield" id="home">
-      <nav class="nav">
+  <header class="topfield" id="home">
+    <nav class="nav">
+      <div class="main-nav">
         <button onclick="showSection('home')">Home</button>
         <button onclick="showSection('staff')">Staff</button>
         <button onclick="showSection('collections')">Collections</button>
-      </nav>
+        <button onclick="showSection('Login')">Login</button>
+      </div>
 
-      <div class="hero">
-        <div class="hero-inner">
-          <h1>Museum of Cultural Memory</h1>
-          <p class="tag">Exploring ancient African artifacts, forgotten civilizations, and the echoes of human origin.</p>
+      <!-- sous-navigation : visible seulement dans Collections -->
+      <div class="sub-nav hidden" id="sub-nav">
+        <button onclick="showCollectionInfo('archaeology')">Archaeology</button>
+        <button onclick="showCollectionInfo('anthropology')">Anthropology</button>
+        <button onclick="showCollectionInfo('assemblages')">Assemblages</button>
+        <button onclick="showCollectionInfo('historie')">Histories</button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>Museum of Cultural Memory</h1>
+        <p class="tag">Exploring ancient African artifacts, forgotten civilizations, and the echoes of human origin.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home-section" class="section visible fade-in">
+      <div class="three-col">
+        <div class="col">
+          <h2>Ancient Egypt</h2>
+          <p>Explore how the Egyptians lived: pottery, jewelry, tools, children’s toys, etc.</p>
+          <p><em>Examples: a vase, a piece of jewelry, and a farming tool.</em></p>
+        </div>
+        <div class="col">
+          <h2>Weapons and Symbols</h2>
+          <p>Power in Ancient Civilizations — Compare objects such as a Greek sword, a Viking axe, and an African scepter.</p>
+        </div>
+        <div class="col">
+          <h2>Masks of the World</h2>
+          <p>Between Art and Ritual — Present African, Asian, and Native American masks, explaining their roles in ceremonies.</p>
         </div>
       </div>
-    </header>
 
-    <main>
-      <!-- HOME SECTION -->
-      <section id="home-section" class="section visible fade-in">
-        <div class="three-col">
-          <div class="col">
-            <h2>Archaeology</h2>
-            <p>Unearth ancient African tools, pottery, and sacred structures that reveal the ingenuity of lost civilizations.</p>
-          </div>
-          <div class="col">
-            <h2>Anthropology</h2>
-            <p>Trace the evolution of belief, culture, and ritual through human remains and ancestral heritage.</p>
-          </div>
-          <div class="col">
-            <h2>History</h2>
-            <p>Walk through timelines of kingdoms, empires, and migrations that shaped the continent’s soul.</p>
-          </div>
+      <div class="three-col">
+        <div class="col">
+          <h2>Lost Civilizations</h2>
+          <p>Explore the mysteries of vanished African empires, from the Nok to Great Zimbabwe.</p>
         </div>
-
-        <div class="three-col">
-          <div class="col">
-            <h2>Lost Civilizations</h2>
-            <p>Explore the mysteries of vanished African empires, from the Nok to Great Zimbabwe.</p>
-          </div>
-          <div class="col">
-            <h2>Ancient Art & Symbols</h2>
-            <p>Decode spiritual patterns, masks, and carvings that preserved wisdom across generations.</p>
-          </div>
-          <div class="col">
-            <h2>Modern Discoveries</h2>
-            <p>Learn how drones, DNA, and 3D scanning are reshaping our understanding of the past.</p>
-          </div>
+        <div class="col">
+          <h2>Ancient Art & Symbols</h2>
+          <p>Decode spiritual patterns, masks, and carvings that preserved wisdom across generations.</p>
         </div>
-
-        <!-- The three original collection buttons at bottom -->
-        <ul class="collections-nav">
-          <li><button onclick="alert('Archaeology gallery coming soon.')">Archaeology</button></li>
-          <li><button onclick="alert('Anthropology gallery coming soon.')">Anthropology</button></li>
-          <li><button onclick="alert('History gallery coming soon.')">History</button></li>
-        </ul>
-      </section>
-
-      <!-- STAFF SECTION -->
-      <section id="staff-section" class="section hidden fade-in container">
-        <h2>Staff — Museum of Cultural Memory</h2>
-        <p class="tag">Meet the specialists who reveal Africa’s ancient stories through science and art.</p>
-
-        <div class="staff-list">
-          <!-- Staff 1 -->
-          <article class="staff-card">
-            <div class="portrait right">
-              <img src="images/dr.amara_velin.jpeg" alt="Dr Amara Velin">
-            </div>
-            <div class="staff-meta">
-              <div class="role">Archaeologist — Specialist in Subterranean Civilizations</div>
-              <h3 class="name">Dr. Amara Velin</h3>
-              <p class="bio">Dr. Amara Velin (PhD, University of Edinburgh) specializes in underground temples and tunnel sanctuaries. She uses drone GPR and 3D photogrammetry to reveal lost urban networks.</p>
-              <div class="meta-list">
-                <span class="chip">PhD Archaeology</span>
-                <span class="chip">Drone GPR</span>
-                <span class="chip">Photogrammetry</span>
-              </div>
-              <p class="special"><strong>Special note:</strong> 2024 UNESCO Field Innovation Award recipient.</p>
-            </div>
-          </article>
-    
-          <!-- Staff 2 -->
-          <article class="staff-card alternate">
-            <div class="portrait left">
-              <img src="images/dr.tariq_ngolo.jpeg" alt="Dr Tariq N'Golo">
-            </div>
-            <div class="staff-meta">
-              <div class="role">Physical Anthropologist — Expert in Ritual Burial Practices</div>
-              <h3 class="name">Dr. Tariq N’Golo</h3>
-              <p class="bio">Dr. Tariq N’Golo (DPhil, University of Cape Town) reads histories encoded in bone and ancient DNA. He connects ancestral memory to ethical curation and repatriation.</p>
-              <div class="meta-list">
-                <span class="chip">DPhil Biological Anthropology</span>
-                <span class="chip">aDNA · Osteology</span>
-                <span class="chip">Collections Manager</span>
-              </div>
-              <p class="special"><strong>Special note:</strong> Integrates oral tradition in his field research.</p>
-            </div>
-          </article>
-
-          <!-- Staff 3 -->
-          <article class="staff-card">
-            <div class="portrait right">
-              <img src="images/dr.elara_mohn.jpeg" alt="Dr Elara Mohn">
-            </div>
-            <div class="staff-meta">
-              <div class="role">Cultural Semiotician — Interpreter of Symbol & Ritual</div>
-              <h3 class="name">Dr. Elara Mohn</h3>
-              <p class="bio">Dr. Elara Mohn (PhD, Sorbonne) deciphers symbolic grammars across time and place. Her work blends semiotics, performance studies, and indigenous epistemologies.</p>
-              <div class="meta-list">
-                <span class="chip">Comparative Mythology</span>
-                <span class="chip">Immersive Media</span>
-                <span class="chip">Lead Interpreter</span>
-              </div>
-              <p class="special"><strong>Special note:</strong> Advocates decolonial museology and cultural storytelling.</p>
-            </div>
-          </article>
+        <div class="col">
+          <h2>Modern Discoveries</h2>
+          <p>Learn how drones, DNA, and 3D scanning are reshaping our understanding of the past.</p>
         </div>
-      </section>
-    </main>
-
-    <footer class="bottomfield">
-      <div class="footer-inner">
-        <p>
-          This is a fictitious website created for academic purposes. The content was conceived by a human and developed with AI assistance. All visual materials were reviewed and curated by a human.
-        </p>
       </div>
-    </footer>
+    </section>
 
-    <script>
-      function showSection(section) {
-        const sections = ['home', 'staff', 'collections'];
-        sections.forEach(id => {
-          const el = document.getElementById(id + '-section');
-          if (el) {
-            el.classList.remove('visible');
-            el.classList.add('hidden');
-          }
-        });
-        const active = document.getElementById(section + '-section');
-        if (active) {
-          active.classList.remove('hidden');
-          active.classList.add('visible');
-        }
-      }
-    </script>
-  </body>
+    <!-- STAFF -->
+    <section id="staff-section" class="section hidden fade-in container">
+      <h2>Staff — Museum of Cultural Memory</h2>
+      <p class="tag">Meet the specialists who reveal Africa’s ancient stories through science and art.</p>
+      <div class="staff-list">
+        <article class="staff-card">
+          <div class="portrait right">
+            <img src="images/dr.amara_velin.jpeg" alt="Dr Amara Velin">
+          </div>
+          <div class="staff-meta">
+            <div class="role">Archaeologist — Specialist in Subterranean Civilizations</div>
+            <h3 class="name">Dr. Amara Velin</h3>
+            <p class="bio">Dr. Amara Velin (PhD, University of Edinburgh) specializes in underground temples and tunnel sanctuaries. She uses drone GPR and 3D photogrammetry to reveal lost urban networks.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- COLLECTIONS -->
+    <section id="collections-section" class="section hidden fade-in container">
+      <p>The content in this gallery was entirely created by AI under human direction. It was then curated, reviewed and edited by a human being published.</p>
+
+      <div id="collection-info" class="collection-info">
+        <!-- contenu injecté par JS -->
+      </div>
+    </section>
+
+        <!-- contenu injecté par JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottomfield">
+    <div class="footer-inner">
+      <p>This is a fictitious website created for academic purposes. The content was conceived by a human and developed with AI assistance.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
 </html>

@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><Daniel Mulomba>'s Museum Web Page.</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="css/style.css">
- 
 </head>
 <body>
 
@@ -19,7 +18,6 @@
         <button onclick="showSection('shop')">Shop</button>
       </div>
 
-      <!-- sub-navigation hiddden -->
       <div class="sub-nav hidden" id="sub-nav">
         <button onclick="showCollectionInfo('archaeology')">Archaeology</button>
         <button onclick="showCollectionInfo('anthropology')">Anthropology</button>
@@ -37,7 +35,6 @@
   </header>
 
   <main>
-    <!-- HOME -->
     <section id="home-section" class="section visible fade-in">
       <div class="three-col">
         <div class="col">
@@ -71,45 +68,18 @@
       </div>
     </section>
 
-    <!-- STAFF -->
     <section id="staff-section" class="section hidden fade-in container">
-      <h2>Staff — Museum of Cultural Memory</h2>
-      <p class="tag">Meet the specialists who reveal Africa’s ancient stories through science and art.</p>
-      <div class="staff-list">
-        <article class="staff-card">
-          <div class="portrait right">
-            <img src="images/dr.amara_velin.jpeg" alt="Dr Amara Velin">
-          </div>
-          <div class="staff-meta">
-            <div class="role">Archaeologist — Specialist in Subterranean Civilizations</div>
-            <h3 class="name">Dr. Amara Velin</h3>
-            <p class="bio">Dr. Amara Velin (PhD, University of Edinburgh) specializes in underground temples and tunnel sanctuaries. She uses drone GPR and 3D photogrammetry to reveal lost urban networks.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+      </section>
 
-    <!-- COLLECTIONS -->
     <section id="collections-section" class="section hidden fade-in container">
-      <p>The content in this gallery was entirely created by AI under human direction. It was then curated, reviewed and edited by a human being published.</p>
-
-      <div id="collection-info" class="collection-info">
-        <!-- JS -->
-      </div>
-    </section>
-
-        <!-- JS -->
-      </div>
-    </section>
-
-    <!-- SHOP -->
-<section id="shop-section" class="section hidden fade-in container">
+      </section>
+    
+    <section id="shop-section" class="section hidden fade-in container">
   <h1>Souvenir Shop</h1>
   <p class="tag">The content in this shop was entirely created by AI under human direction. It was then curated, reviewed and edited by a human before being published.</p>
 
   <div class="shop-container">
 
-    <!-- ITEM 1 -->
     <div class="souvenir-item" data-id="item001">
       <img src="images/shop/mask_replica.jpeg" alt="Replica Fang Ritual Mask" title="Fang Mask Replica" onclick="openModal('images/shop/mask_replica.jpeg')">
       <h3>Fang Mask Replica</h3>
@@ -118,7 +88,6 @@
       <button onclick="addToCart('item001', 'Fang Mask Replica', 39.99)">Add to Cart</button>
     </div>
 
-    <!-- ITEM 2 -->
     <div class="souvenir-item" data-id="item002">
       <img src="images/shop/serpent_dagger.jpeg" alt="Bronze Serpent Dagger" title="Mycenaean Serpent Dagger" onclick="openModal('images/shop/serpent_dagger.jpeg')">
       <h3>Bronze Serpent Dagger</h3>
@@ -127,7 +96,6 @@
       <button onclick="addToCart('item002', 'Bronze Serpent Dagger', 54.99)">Add to Cart</button>
     </div>
 
-    <!-- ITEM 3 -->
     <div class="souvenir-item" data-id="item003">
       <img src="images/shop/nazca_vase.jpeg" alt="Nazca Ceramic Vase" title="Nazca Ritual Vase" onclick="openModal('images/shop/nazca_vase.jpeg')">
       <h3>Nazca Ceramic Vase</h3>
@@ -136,7 +104,6 @@
       <button onclick="addToCart('item003', 'Nazca Ceramic Vase', 29.99)">Add to Cart</button>
     </div>
 
-    <!-- ITEM 4 -->
     <div class="souvenir-item" data-id="item004">
       <img src="images/shop/funerary_tapestry.jpeg" alt="Paracas Tapestry Replica" title="Paracas Tapestry" onclick="openModal('images/shop/funerary_tapestry.jpeg')">
       <h3>Paracas Tapestry Replica</h3>
@@ -148,7 +115,6 @@
   </div>
 </section>
 
-<!--  MODAL -->
 <div id="item-modal" class="modal hidden">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
@@ -164,8 +130,7 @@
     </div>
   </footer>
 
-  <!-- Modal image preview -->
-<div id="item-modal" class="modal hidden">
+  <div id="item-modal" class="modal hidden">
   <div class="modal-content">
     <span class="close-modal" onclick="closeModal()">&times;</span>
     <img id="modal-img" src="" alt="">

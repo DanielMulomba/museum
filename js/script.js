@@ -1,8 +1,28 @@
-function showSection(section) {
+
+async function loadSectionContent(sectionId, path) {
+  const el = document.getElementById(sectionId);
+  // load content
+  if (el && el.innerHTML.trim() === "") {
+    try {
+      const response = await fetch(path);
+      if (!response.ok) {
+        throw new Error(`Erreur de chargement: ${response.statusText}`);
+      }
+      const htmlContent = await response.text();
+      el.innerHTML = htmlContent;
+    } catch (error) {
+      console.error(`Impossible de charger le contenu de ${path}:`, error);
+      el.innerHTML = `<p>Erreur: Contenu non disponible pour ${sectionId}.</p>`;
+    }
+  }
+}
+
+/* async showfuction */
+async function showSection(section) {
   const sections = ['home', 'staff', 'collections', 'shop'];
   const subNav = document.getElementById('sub-nav');
 
-  // Hide sections
+  // hide sectionns
   sections.forEach(id => {
     const el = document.getElementById(id + '-section');
     if (el) {
@@ -11,21 +31,35 @@ function showSection(section) {
     }
   });
 
-  // Display the selected section
+  // hide under-nav
+  subNav.classList.add('hidden');
+
+  // active section
   const active = document.getElementById(section + '-section');
+  
   if (active) {
+    // load (Staff/Collections)
+    if (section === 'staff') {
+      await loadSectionContent('staff-section', 'html/staff.html');
+    } 
+    
+    if (section === 'collections') {
+      // load (html/collections.html)
+      await loadSectionContent('collections-section', 'html/collections.html'); 
+      
+      // display under-nav
+      subNav.classList.remove('hidden'); 
+      
+      // load  'archaeology' by default
+      showCollectionInfo('archaeology');
+    }
+
+    // show section
     active.classList.remove('hidden');
     active.classList.add('visible');
   }
 
-  // Sub-nav
-  if (section === 'collections') {
-    subNav.classList.remove('hidden');
-    // load archeology by default
-    showCollectionInfo('archaeology');
-  } else {
-    subNav.classList.add('hidden');
-  }
+
 }
 
 
@@ -220,6 +254,11 @@ function showCollectionInfo(topic) {
   const infoDiv = document.getElementById('collection-info');
   let html = '';
 
+  if (!infoDiv) {
+    console.warn("showCollectionInfo a été appelé avant que #collection-info ne soit chargé.");
+    return;
+  }
+
   if (topic === 'archaeology') {
     html += '<h3>Archaeology</h3>';
     artifactsData.archaeology.forEach(item => {
@@ -239,6 +278,12 @@ function showCollectionInfo(topic) {
 
 function showCollectionInfo(category) {
   const container = document.getElementById('collection-info');
+
+  if (!container) {
+    console.warn("showCollectionInfo(category) a été appelé avant que #collection-info ne soit chargé.");
+    return;
+  }
+  
   container.innerHTML = ''; // empty recycle
 
   if (!artifactsData[category]) return;
@@ -257,9 +302,8 @@ function openModal(imgSrc, title, desc) {
   const modalTitle = document.getElementById('modal-title');
   const modalDesc = document.getElementById('modal-desc');
 
+
   modalImg.src = imgSrc;
-  modalTitle.textContent = title;
-  modalDesc.textContent = desc;
 
   modal.classList.remove('hidden');
 }

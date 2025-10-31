@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Daniel Mulomba — Museum of Cultural Memory</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="css/style.css">
- 
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Daniel Mulomba's Museum Web Page.</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -16,10 +15,9 @@
         <button onclick="showSection('home')">Home</button>
         <button onclick="showSection('staff')">Staff</button>
         <button onclick="showSection('collections')">Collections</button>
-        <button onclick="showSection('Login')">Login</button>
+        <button onclick="showSection('shop')">Shop</button>
       </div>
 
-      <!-- sous-navigation : visible seulement dans Collections -->
       <div class="sub-nav hidden" id="sub-nav">
         <button onclick="showCollectionInfo('archaeology')">Archaeology</button>
         <button onclick="showCollectionInfo('anthropology')">Anthropology</button>
@@ -37,7 +35,6 @@
   </header>
 
   <main>
-    <!-- HOME -->
     <section id="home-section" class="section visible fade-in">
       <div class="three-col">
         <div class="col">
@@ -71,43 +68,31 @@
       </div>
     </section>
 
-    <!-- STAFF -->
-    <section id="staff-section" class="section hidden fade-in container">
-      <h2>Staff — Museum of Cultural Memory</h2>
-      <p class="tag">Meet the specialists who reveal Africa’s ancient stories through science and art.</p>
-      <div class="staff-list">
-        <article class="staff-card">
-          <div class="portrait right">
-            <img src="images/dr.amara_velin.jpeg" alt="Dr Amara Velin">
-          </div>
-          <div class="staff-meta">
-            <div class="role">Archaeologist — Specialist in Subterranean Civilizations</div>
-            <h3 class="name">Dr. Amara Velin</h3>
-            <p class="bio">Dr. Amara Velin (PhD, University of Edinburgh) specializes in underground temples and tunnel sanctuaries. She uses drone GPR and 3D photogrammetry to reveal lost urban networks.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <div id="staff-section" class="section hidden fade-in container">
+    </div>
 
-    <!-- COLLECTIONS -->
-    <section id="collections-section" class="section hidden fade-in container">
-      <p>The content in this gallery was entirely created by AI under human direction. It was then curated, reviewed and edited by a human being published.</p>
-
-      <div id="collection-info" class="collection-info">
-        <!-- contenu injecté par JS -->
-      </div>
-    </section>
-
-        <!-- contenu injecté par JS -->
-      </div>
-    </section>
-  </main>
+    <div id="collections-section" class="section hidden fade-in container">
+    </div>
+    
+    <div id="shop-section" class="section hidden fade-in container">
+    </div>
+  
+</main>
 
   <footer class="bottomfield">
     <div class="footer-inner">
       <p>This is a fictitious website created for academic purposes. The content was conceived by a human and developed with AI assistance.</p>
     </div>
   </footer>
+
+  <div id="item-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="images/shop" alt="">
+    <h2 id="modal-title">&nbsp;</h2>
+    <p id="modal-desc"></p>
+  </div>
+</div>
 
   <script src="js/script.js"></script>
 </body>

@@ -268,7 +268,7 @@ function showCollectionInfo(category) {
   const container = document.getElementById('collection-info');
 
   if (!container) {
-    console.warn("showCollectionInfo(category) a été appelé avant que #collection-info ne soit chargé.");
+    console.warn("showCollectionInfo(category)  #collection-info ");
     return;
   }
   
@@ -547,10 +547,51 @@ document.addEventListener('DOMContentLoaded', () => {
     showSection('home');
 });
 
-// Fonction factice pour le bouton "Add to Cart"
-function addToCart(itemId, name, price) {
-    console.log(`Item added to cart: ${name} (${price})`);
-    alert(`Added ${name} to your virtual cart!`);
+
+// ===================================================================
+// NOUVEAU CODE DU PANIER (REMPLACE L'ANCIEN addToCart)
+// ===================================================================
+
+//this key links the shop to the cart
+const CART_KEY = 'museumCartV1';
+
+// This function reads the Cart information and write it to JSON  
+function readCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch { return []; }
+}
+
+function writeCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+/*This function is called by the addToCart button the first part reads the dataset contined in the buttons and asssigns the values to variables */
+function addToCart(btn) {
+  const id = btn.dataset.id;
+  const name = btn.dataset.name;
+  const unitPrice = Number(btn.dataset.price);
+  const image = btn.dataset.image;
+
+  /* This part puts all of the individual items and puts them into an object called cart and writes it to LocalStorage   */
+  let cart = readCart();
+  const idx = cart.findIndex(it => it.id === id);
+  if (idx >= 0) {
+    cart[idx].qty += 1;
+  } else {
+    cart.push({ id, name, unitPrice, qty: 1, image });
+  }
+  writeCart(cart);
+
+  // Update the item card's qty badge
+  const card = btn.closest('.souvenir-item');
+  if (card) {
+    const badge = card.querySelector('.qty-badge');
+    if (badge) {
+      const item = cart.find(it => it.id === id);
+      // Met à jour le badge pour afficher la quantité
+      badge.textContent = item ? `Qty: ${item.qty}` : '';
+    }
+  }
 }
 
 

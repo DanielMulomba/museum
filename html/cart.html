@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Museum Cart</title>
+  <link rel="stylesheet" href="../css/style.css">
+ 
+</head>
+<body>
+
+  <main class="cart-container">
+  <!-- NEW CONTROLS (Cart page only) -->
+    <div class="controls">
+      <label><input type="checkbox" id="memberToggle"> Member Discount (15%)</label>
+    </div>
+
+
+<!-- STATES & OUTPUT AREAS -->
+    <div id="emptyMsg" class="empty" hidden>Your cart is empty.</div>
+    
+    <table id="cart-items-table" class="cart-table" hidden>
+      <thead>
+        <tr>
+          <th colspan="2">Item</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Line Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items-body">
+        </tbody>
+    </table>
+    
+    <div id="cart-summary" class="cart-summary" hidden>
+      </div>
+
+     <!-- BASIC ACTIONS -->
+    <div class="actions">
+      <button id="clearBtn">Clear Cart</button>
+      <a href="html/shop.html">Keep Shopping</a>
+    </div>
+  </main>
+
+
+  <script>
+  /* =================== PIPE FROM shop.html (leave as-is) =================== */
+  // shop.html must write items with: data-id, data-name, data-price, data-image
+  // addToCart(btn) should push objects { id, name, unitPrice, qty, image } to localStorage
+  const CART_KEY = 'museumCartV1'; // MUST match shop.html
+
+  function readCart(){
+    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+    catch { return []; }
+  }
+  function writeCart(cart){
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+  /* ================= END PIPE ============================================= */
+
+
+  /* ====================== UTILITIES & CONSTANTS =========================== */
+  //  Currency with parentheses for negatives
+  function money(n){
+    const sign = n < 0 ? -1 : 1;
+    //currency
+    const s = Math.abs(n).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+    return sign < 0 ? `(${s})` : s;
+  }
+
+  // Spec constants
+  const TAX_RATE = 0.102;
+  const MEMBER_DISCOUNT_RATE = 0.15;
+  const SHIPPING_RATE = 25.00;
+  const VOLUME_TIERS = [
+    [0.00, 49.99, 0.00],
+    [50.00, 99.99, 0.05],
+    [100.00, 199.99, 0.10],
+    [200.00, Infinity, 0.15]
+  ];
+
+  // Return the volume discount rate given an item total
+  function volumeRate(total){
+    for (const [min,max,rate] of VOLUME_TIERS){
+      if (total >= min && total <= max) return rate;
+    }
+    return 0;
+  }
+
+  // Remove a line item entirely (qty=0 => drop row)
+  function removeItem(id){
+    const next = readCart().filter(it => it.id !== id);
+    writeCart(next);
+    render();
+  }
+
+  // Clear cart = initial state (cart empty, member unchecked)
+  function clearCart(){
+    writeCart([]);
+    document.getElementById('memberToggle').checked = false;
+    render();
+  }
+  /* ================== END UTILITIES & CONSTANTS =========================== */
+
+
+  /* ====================== STUDENT WORK STARTS HERE ========================= */
+  function render(){
+    const itemsTable = document.getElementById('cart-items-table');
+    const itemsBody  = document.getElementById('cart-items-body');
+    const summaryDiv = document.getElementById('cart-summary');
+    const emptyMsg   = document.getElementById('emptyMsg');
+    const isMember   = document.getElementById('memberToggle').checked;
+
+    // 1) If empty → show #emptyMsg and hide #items and #summary
+    let cart = readCart().filter(it => it.qty > 0 && it.unitPrice > 0);
+
+    // 2) If empty → show #emptyMsg and hide #items and #summary
+    if (cart.length === 0) {
+      emptyMsg.hidden = false;
+      itemsTable.hidden = true;
+      summaryDiv.hidden = true;
+      return;
+    }
+
+    // If not
+    emptyMsg.hidden = true;
+    itemsTable.hidden = false;
+    summaryDiv.hidden = false;
+
+    // Declare all variables
+    let itemTotal = 0;
+    let itemsHtml = ''; // table line
+    let summaryHtml = '<h3>Order Summary</h3>'; // Summary
+    
+    let volDiscount = 0;
+    let memDiscount = 0;
+    let appliedDiscount = 0;
+    let subtotal = 0;
+    let taxAmount = 0;
+    let invoiceTotal = 0;
+    
+    // 3) Build a text-only list in #items:
+    for (const item of cart) {
+      const lineTotal = item.unitPrice * item.qty;
+      itemTotal += lineTotal;
+      
+      itemsHtml += `
+        <tr>
+          <td class="cart-item-img"><img src="../${item.image}" alt="${item.name}"></td>
+          <td class="cart-item-name">${item.name}</td>
+          <td class="align-center">${item.qty}</td>
+          <td class="align-right">${money(item.unitPrice)}</td>
+          <td class="align-right">${money(lineTotal)}</td>
+          <td class="align-center">
+            <button class="cart-item-remove-btn" onclick="removeItem('${item.id}')" title="Remove ${item.name}">
+              Remove
+            </button>
+          </td>
+        </tr>
+      `;
+    }
+    // Include a small Remove button per line that calls removeItem(id)
+    itemsBody.innerHTML = itemsHtml;
+
+    // 4)Math (single-discount rule):
+    const potentialVolDiscount = itemTotal * volumeRate(itemTotal);
+    const potentialMemDiscount = isMember ? itemTotal * MEMBER_DISCOUNT_RATE : 0;
+
+    //  ItemTotal = sum(unitPrice  If Member checked AND Volume tier would apply → PROMPT user to choose:
+    if (potentialVolDiscount > 0 && potentialMemDiscount > 0) {
+      let choice = prompt("Only one discount may be applied. Type 'M' for Member or 'V' for Volume:", "M");
+      if (choice && choice.toUpperCase() === 'M') {
+        memDiscount = potentialMemDiscount;
+      } else {
+        //  Type 'M' for Member or 'V' for Volume:
+        volDiscount = potentialVolDiscount;
+      }
+    } else if (potentialVolDiscount > 0) {
+      volDiscount = potentialVolDiscount;
+    } else if (potentialMemDiscount > 0) {
+      memDiscount = potentialMemDiscount;
+    }
+
+    appliedDiscount = volDiscount + memDiscount;
+    
+    // TaxAmount = Subtotal * TAX_RATE
+    subtotal = itemTotal - appliedDiscount + SHIPPING_RATE;
+    // InvoiceTotal = Subtotal + TaxAmount
+    taxAmount = subtotal > 0 ? subtotal * TAX_RATE : 0; 
+    invoiceTotal = subtotal + taxAmount;
+
+    // 5) Write a single summary block to #summary (like commission):
+    // nested function
+    function summaryRow(label, value, isNegative = false) {
+      let formattedValue = money(value);
+      if (isNegative && value > 0) {
+        // Display result($-XX.XX)
+        formattedValue = `(${money(value)})`; 
+      }
+      return `
+        <div class="summary-row">
+          <span>${label}</span>
+          <span>${formattedValue}</span>
+        </div>
+      `;
+    }
+    
+    function summaryRowText(label, text) {
+       return `
+        <div class="summary-row">
+          <span>${label}</span>
+          <span>${text}</span>
+        </div>
+      `;
+    }
+
+    summaryHtml += summaryRow('Subtotal of Items', itemTotal);
+    summaryHtml += summaryRow('Volume Discount', volDiscount, true); // true = marquer comme négatif
+    summaryHtml += summaryRow('Member Discount', memDiscount, true);
+    summaryHtml += summaryRow('Shipping', SHIPPING_RATE);
+    summaryHtml += summaryRow('Subtotal (Taxable)', subtotal);
+    summaryHtml += summaryRowText('Tax Rate', `${(TAX_RATE * 100).toFixed(2)}%`);
+    summaryHtml += summaryRow('Tax Amount $', taxAmount);
+    summaryHtml += `<div class="summary-total">${summaryRow('Invoice Total', invoiceTotal)}</div>`;
+
+    // summary
+    summaryDiv.innerHTML = summaryHtml;
+  }
+  /* ================== END STUDENT WORK ==================================== */
+
+  // Événements → re-render
+  document.getElementById('memberToggle').addEventListener('change', render);
+  document.getElementById('clearBtn').addEventListener('click', clearCart);
+
+  // First paint
+  render();
+  </script>
+</body>
+</html>

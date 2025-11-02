@@ -671,3 +671,240 @@ body {
     max-width: 100%; /* Full width on mobile */
   }
 }
+
+/* --- Styles pour la page Boutique (Bouton Panier & Badge Qty) --- */
+
+#viewCartBtn {
+  /* Style assorti à vos boutons de navigation existants */
+  background-color: rgba(255, 255, 255, 0.85);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  margin: 0 0.3rem 1.5rem; /* Ajout d'une marge en bas */
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+#viewCartBtn:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+.qty-badge {
+  /*  */
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+  min-height: 1.2em; 
+}
+
+
+/* --- Styles pour la page Panier (cart.html) --- */
+
+/* Assure que main a un padding cohérent */
+main.cart-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.controls {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 5px;
+  /* Assorti à l'image du prof */
+  background: #f8f8f8;
+  border: 1px solid #eee;
+}
+
+.controls label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.controls input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+
+.empty {
+  padding: 2rem;
+  border: 2px dashed #ccc;
+  font-style: italic;
+  text-align: center;
+  font-size: 1.1rem;
+  border-radius: 5px;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+/* Style pour les boutons Clear et Keep Shopping */
+.actions button,
+.actions a {
+  /* Style assorti aux boutons de votre boutique */
+  background-color: #222;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.actions button:hover,
+.actions a:hover {
+  background-color: #555;
+}
+
+/* Style "Clear Cart" */
+.actions #clearBtn {
+  background-color: #777;
+}
+.actions #clearBtn:hover {
+  background-color: #999;
+}
+
+
+/* Tableau du Panier (Style Bonus) */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.cart-table thead {
+  /* Assorti à l'image du prof (fond gris clair) */
+  background-color: #f1f1f1;
+  border-bottom: 2px solid #bbb;
+}
+
+.cart-table th {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Alignement des en-têtes comme dans l'image */
+.cart-table th:nth-child(3), /* Qty */
+.cart-table th:nth-child(4), /* Unit Price */
+.cart-table th:nth-child(5), /* Line Total */
+.cart-table th:nth-child(6) { /* Remove */
+  text-align: center;
+}
+
+
+.cart-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.cart-table .cart-item-img img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.cart-table .cart-item-name {
+  font-weight: bold;
+}
+
+.cart-table .align-right {
+  text-align: right;
+  /* Police pour l'alignement des chiffres */
+  font-family: ui-monospace, "Courier New", Courier, monospace;
+  font-size: 1rem;
+}
+.cart-table .align-center {
+  text-align: center;
+  font-family: ui-monospace, "Courier New", Courier, monospace;
+  font-size: 1rem;
+}
+
+.cart-item-remove-btn {
+  /* Style assorti à l'image du prof */
+  font-size: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.cart-item-remove-btn:hover {
+  background-color: #c00;
+  color: white;
+  border-color: #a00;
+}
+
+
+/* Résumé du Panier (Style Bonus) */
+.cart-summary {
+  width: 100%;
+  max-width: 450px;
+  margin-left: auto; /* Aligne le bloc à droite */
+  background: #fdfdfd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  /* Assorti à l'image du prof */
+  font-family: ui-monospace, "Courier New", Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Cache le H3 que nous avons ajouté en JS, car l'image du prof n'en a pas */
+.cart-summary h3 {
+  display: none;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+}
+
+.summary-row span:first-child {
+  color: #333;
+  padding-right: 2rem; /* Espace entre le libellé et le numéro */
+}
+
+.summary-row span:last-child {
+  font-weight: bold;
+  text-align: right;
+  min-width: 120px; /* Assure que les montants ont de l'espace */
+}
+
+/* Style pour le total final */
+.summary-total {
+  border-top: 1px solid #999;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.summary-total .summary-row span {
+  color: #000;
+}

@@ -1,3 +1,5 @@
+<button onclick="location.href='html/cart.html'" id="viewCartBtn">View Cart</button>
+
 <h2>Souvenir Shop</h2>
   <p class="tag">The content in this shop was entirely created by AI under human direction. It was then curated, reviewed and edited by a human before being published.</p>
 
@@ -8,7 +10,15 @@
       <h3>Fang Mask Replica</h3>
       <p>Inspired by the <em>Fang Ritual Mask (Gabon)</em> — hand-carved wood, matte finish.</p>
       <p class="price">$39.99</p>
-      <button onclick="addToCart('item001', 'Fang Mask Replica', 39.99)">Add to Cart</button>
+      <span class="qty-badge" aria-live="polite"></span>
+      <button 
+        onclick="addToCart(this)"
+        data-id="item001"
+        data-name="Fang Mask Replica"
+        data-price="39.99"
+        data-image="images/shop/mask_replica.jpeg">
+        Add Fang Mask to Cart
+      </button>
     </div>
 
     <div class="souvenir-item" data-id="item002" title="Bronze Serpent Dagger">
@@ -16,7 +26,15 @@
       <h3>Bronze Serpent Dagger</h3>
       <p>Replica of the <em>Mycenaean Serpent Dagger</em> — cast bronze, aged patina.</p>
       <p class="price">$54.99</p>
-      <button onclick="addToCart('item002', 'Bronze Serpent Dagger', 54.99)">Add to Cart</button>
+      <span class="qty-badge" aria-live="polite"></span>
+      <button 
+        onclick="addToCart(this)"
+        data-id="item002"
+        data-name="Bronze Serpent Dagger"
+        data-price="54.99"
+        data-image="images/shop/serpent_dagger.jpeg">
+        Add Serpent Dagger to Cart
+      </button>
     </div>
 
     <div class="souvenir-item" data-id="item003" title="Nazca Ceramic Vase">
@@ -24,7 +42,15 @@
       <h3>Nazca Ceramic Vase</h3>
       <p>Inspired by the <em>Nazca Ceremonial Vase</em> — hand-painted clay, made in Peru.</p>
       <p class="price">$29.99</p>
-      <button onclick="addToCart('item003', 'Nazca Ceramic Vase', 29.99)">Add to Cart</button>
+      <span class="qty-badge" aria-live="polite"></span>
+      <button 
+        onclick="addToCart(this)"
+        data-id="item003"
+        data-name="Nazca Ceramic Vase"
+        data-price="29.99"
+        data-image="images/shop/nazca_vase.jpeg">
+        Add Nazca Vase to Cart
+      </button>
     </div>
 
     <div class="souvenir-item" data-id="item004" title="Paracas Tapestry Replica">
@@ -32,7 +58,15 @@
       <h3>Paracas Tapestry Replica</h3>
       <p>Inspired by the <em>Paracas Funerary Tapestry</em> — fine woven textile reproduction.</p>
       <p class="price">$59.99</p>
-      <button onclick="addToCart('item004', 'Paracas Tapestry Replica', 59.99)">Add to Cart</button>
+      <span class="qty-badge" aria-live="polite"></span>
+      <button 
+        onclick="addToCart(this)"
+        data-id="item004"
+        data-name="Paracas Tapestry Replica"
+        data-price="59.99"
+        data-image="images/shop/funerary_tapestry.jpeg">
+        Add Paracas Tapestry to Cart
+      </button>
     </div>
 
   </div>

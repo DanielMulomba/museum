@@ -290,7 +290,7 @@ body {
   margin-top: 1.5rem;
 }
 
-/* --- SOUVENIR SHOP --- */
+/* SOUVENIR SHOP */
 .shop-container {
   display: flex;
   flex-wrap: wrap;
@@ -344,7 +344,7 @@ body {
   background-color: #555;
 }
 
-/* ---- Modal Styles ---- */
+/* Modal Styles */
 .modal {
   position: fixed;
   z-index: 1000;
@@ -356,10 +356,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Added for smoother transition */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .modal.hidden {
   display: none;
+  /* Added for smoother transition */
+  opacity: 0;
+  visibility: hidden;
 }
 
 .modal-content {
@@ -370,6 +377,11 @@ body {
   text-align: center;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
   animation: zoomIn 0.3s ease;
+  /* Added for Collections Modal */
+  position: relative; /* Allows positioning of close button inside */
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-content img {
@@ -380,18 +392,35 @@ body {
 
 .close-modal {
   position: absolute;
-  top: 20px;
-  right: 30px;
+  top: 15px; /* Adjusted position */
+  right: 20px; /* Adjusted position */
   font-size: 2rem;
-  color: #fff;
+  color: #aaa; /* Changed color for better visibility on white */
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
+  z-index: 10;
+  line-height: 1;
+  /* Ensure it's not the shop modal's */
+  background: none;
+  border: none;
+  padding: 0;
 }
 
+/* Handle both modal close buttons */
 .close-modal:hover {
+  color: #222; /* Darker hover */
+}
+/* Specific style for shop modal close button if needed */
+#item-modal .close-modal {
+  color: #fff; /* Re-set shop modal color if it was white */
+  top: 20px;
+  right: 30px;
+}
+#item-modal .close-modal:hover {
   color: #ffcc00;
 }
+
 
 @keyframes zoomIn {
   from { transform: scale(0.8); opacity: 0; }
@@ -432,4 +461,213 @@ body {
 .artifact-details p strong {
   color: #111;
   margin-right: 0.5em; 
+}
+
+
+
+/* Phase 1: Collections Modal */
+
+/* Make artifact images clickable */
+.artifact .portrait img {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.artifact .portrait img:hover {
+  opacity: 0.8;
+}
+
+/* Instructional Note on Collections Page */
+.collection-note {
+  font-style: italic;
+  color: #555;
+  background: #fdfdfd;
+  border: 1px solid #eee;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Collections Modal Body */
+#modal-body {
+  text-align: left;
+  padding: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  /* Add padding-top to avoid close button */
+  padding-top: 2.5rem; 
+}
+#modal-body h2 {
+  margin-bottom: 1rem;
+  color: #222;
+  line-height: 1.2;
+}
+#modal-body h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+#modal-body p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+.modal-item-details {
+  background: #f9f9f9;
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+.modal-item-details p {
+  margin-bottom: 0.5rem;
+}
+.modal-item-details p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* Phase 2: Histories Section Layout */
+.collection-info .collection-title {
+  margin-bottom: 1.5rem;
+}
+
+.history-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin-bottom: 3rem;
+  /* Use a different background from the main collection-info */
+  background: #fcfcfc;
+}
+
+.history-item-header {
+  padding: 1.5rem 2rem;
+  background: #f1f1f1;
+  border-bottom: 1px solid #ddd;
+}
+
+.history-item-header h2 {
+  margin: 0;
+  color: #222;
+}
+
+.history-item-header .curator-note {
+  font-size: 0.9rem;
+  color: #555;
+  font-style: italic;
+}
+
+.history-item-body {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.history-item-image {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.history-item-image img {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+.history-item-facts {
+  flex: 2;
+  min-width: 300px;
+}
+
+.history-item-facts h3 {
+  border-bottom: 2px solid #333;
+  padding-bottom: 5px;
+  margin-bottom: 1rem;
+}
+
+.history-item-facts ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  column-count: 2;
+  column-gap: 1.5rem;
+}
+
+.history-item-facts li {
+   margin-bottom: 0.5rem;
+   break-inside: avoid;
+}
+
+.history-item-facts li strong {
+  color: #111;
+  display: block; /* Makes the label stack on top */
+}
+
+.history-item-interpretation {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.history-item-interpretation h3,
+.history-item-interpretation h4 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.history-item-interpretation blockquote {
+  border-left: 3px solid #ccc;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #444;
+}
+
+.history-item-interpretation .courtesy-note {
+   font-size: 0.9rem;
+   color: #555;
+   margin-top: 1.5rem;
+   border-top: 1px solid #eee;
+   padding-top: 1rem;
+}
+
+.back-to-collections-btn {
+  display: inline-block;
+  background-color: #222;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.back-to-collections-btn:hover {
+  background-color: #555;
+}
+
+/* Responsive adjustments for new layouts */
+@media (max-width: 768px) {
+  .history-item-facts ul {
+    column-count: 1;
+  }
+  .history-item-body {
+    flex-direction: column;
+  }
+  .history-item-image {
+    max-width: 100%; /* Full width on mobile */
+  }
 }

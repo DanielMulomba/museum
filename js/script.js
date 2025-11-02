@@ -1,4 +1,3 @@
-// Données des artefacts (EXTRAITES de collections.html)
 const artifactsData = {
   archaeology: [
     {
@@ -153,10 +152,10 @@ const artifactsData = {
       }
     },
   ],
-  historie: [], // Ajouté pour gérer les cas sans données
+  historie: [], 
 };
 
-// Fonction pour charger le contenu des sections externes (Staff, Collections, Shop)
+// Function for charging sections(Staff, Collections, Shop)
 async function loadSectionContent(sectionId, path) {
   const el = document.getElementById(sectionId);
   // load content
@@ -175,7 +174,7 @@ async function loadSectionContent(sectionId, path) {
   }
 }
 
-/* Fonction pour basculer l'affichage des sections principales */
+/* Function for the navigation */
 async function showSection(section) {
   const sections = ['home', 'staff', 'collections', 'shop'];
   const subNav = document.getElementById('sub-nav');
@@ -222,15 +221,22 @@ async function showSection(section) {
   }
 }
 
+// Helper function to create safe IDs for modal targets
+function generateId(name) {
+  return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
 
-/* Génère le HTML pour un artefact */
+
+/* Generate html for artifact */
 function artifactHTML(imgSrc, imgAlt, data) {
-  // data 
-  // Utilisation de <article class="staff-card"> pour réutiliser le style de base
+  // Get a safe ID for the modal trigger
+  const artifactId = generateId(data.Name);
+
+  // Added class="open-modal" and data-modal-target to the <img> tag
   return `
   <article class="staff-card artifact">
     <div class="portrait">
-      <img src="${imgSrc}" alt="${imgAlt}">
+      <img src="${imgSrc}" alt="${imgAlt}" class="open-modal" data-modal-target="#modal-text-${artifactId}">
     </div>
     <div class="staff-meta">
       <h3>${data.Name}</h3>
@@ -257,7 +263,7 @@ function artifactHTML(imgSrc, imgAlt, data) {
   `;
 }
 
-/* Fonction pour afficher les informations d'une collection spécifique */
+/* Function which displays the specific collections */
 function showCollectionInfo(category) {
   const container = document.getElementById('collection-info');
 
@@ -266,8 +272,17 @@ function showCollectionInfo(category) {
     return;
   }
   
-  // Affiche le titre de la catégorie
+  // Handle 'historie' category (Phase 2)
+  if (category === 'historie') {
+    container.innerHTML = buildHistoriesPage();
+    return;
+  }
+  
+  // display collection
   container.innerHTML = `<h2 class="collection-title">${category.charAt(0).toUpperCase() + category.slice(1)} Collection</h2>`;
+
+  //Add instructional text (Phase 1)
+  container.innerHTML += `<p class="collection-note">Click on any artifact image to view the curator's interpretation.</p>`;
 
   const dataArray = artifactsData[category] || [];
 
@@ -276,26 +291,229 @@ function showCollectionInfo(category) {
     return;
   }
 
-  // Génère le HTML des artefacts à partir des données
+  // Generate HTML
   dataArray.forEach(item => {
     container.innerHTML += artifactHTML(item.img, item.alt, item.data);
   });
 }
 
-// === MODAL LOGIC ===
-// Ajout du titre et de la description de l'article de la boutique dans la modale
+
+// Histories  (Phase 2)
+function buildHistoriesPage() {
+  const archItems = artifactsData.archaeology;
+  const anthItems = artifactsData.anthropology;
+
+  // Helper function to build the facts list
+  const buildFactsList = (data) => `
+    <ul>
+      <li><strong>Material:</strong> ${data.Material}</li>
+      <li><strong>Estimated Age:</strong> ${data['Estimated Age']}</li>
+      <li><strong>Find Location:</strong> ${data['Find Location']}</li>
+      <li><strong>Use/Function:</strong> ${data['Use and Function']}</li>
+      <li><strong>Dimensions:</strong> ${data['Size/Weight/Shape']}</li>
+      <li><strong>Condition:</strong> ${data.Condition}</li>
+    </ul>
+  `;
+
+  // Note
+  let html = `
+    <h2 class="collection-title">Curator's Histories & Interpretations</h2>
+    
+    <article class="history-item">
+      <div class="history-item-header">
+        <h2>Mycenaean Serpent Dagger</h2>
+        <div class="curator-note">Interpretation by Dr. Cassian Rho, Field Archaeologist</div>
+      </div>
+      <div class="history-item-body">
+        <div class="history-item-image">
+          <img src="${archItems[0].img}" alt="${archItems[0].alt}">
+        </div>
+        <div class="history-item-facts">
+          <h3>Artifact Facts</h3>
+          ${buildFactsList(archItems[0].data)}
+        </div>
+        <div class="history-item-interpretation">
+          <h3>What the Experts Believe</h3>
+          <p>Unearthed in the royal necropolis of Mycenae, this dagger is a masterpiece of Late Bronze Age metallurgy. Its surface glimmers with gold and niello, forming the stylized outline of intertwining serpents — a motif symbolizing rebirth and divine protection. Measuring roughly 35 centimeters in length, the blade was discovered beside the right hand of an elite burial, a position signifying authority both in life and in death.</p>
+          <p>Unlike utilitarian weapons, this dagger shows minimal wear. Its pristine edge and intricate ornamentation suggest that it functioned as a ceremonial emblem rather than a battlefield tool. In Mycenaean belief systems, serpents embodied the regenerative power of the earth and the enduring presence of the ancestors. The placement of such an object within a tomb thus reflected not only wealth and craftsmanship but also metaphysical belief — the idea that material splendor could mediate the passage between mortal and divine realms.</p>
+          <p>The dagger’s production involved complex bronze casting using the lost-wax method, followed by inlaying with precious metals and polishing to a mirror finish. This fusion of technical mastery and spiritual symbolism reveals the dual nature of Mycenaean elite identity: the warrior as both artisan and believer.</p>
+          
+          <h4>Comparative Note</h4>
+          <p>${archItems[0].data.Comparison}</p>
+          
+          <div class="courtesy-note">
+            On Display Courtesy Of: The Hellenic Ministry of Culture and Sports, Ephorate of Antiquities of Argolis.
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="history-item">
+      <div class="history-item-header">
+        <h2>Nazca Ceremonial Vase</h2>
+        <div class="curator-note">Interpretation by Dr. Cassian Rho, Field Archaeologist</div>
+      </div>
+      <div class="history-item-body">
+        <div class="history-item-image">
+          <img src="${archItems[1].img}" alt="${archItems[1].alt}">
+        </div>
+        <div class="history-item-facts">
+          <h3>Artifact Facts</h3>
+          ${buildFactsList(archItems[1].data)}
+        </div>
+        <div class="history-item-interpretation">
+          <h3>What the Experts Believe</h3>
+          <p>This vessel exemplifies the sophisticated artistry and spiritual depth of the Nazca civilization. Produced in southern coastal Peru more than 1,400 years ago, it was not a utilitarian object but a ritual container used in ceremonies of fertility, rainmaking, and ancestral veneration. Its surface bears mineral-based pigments — red, yellow, white, and black — applied before firing and burnished to a lustrous finish. The motifs, alternating between geometric and anthropomorphic forms, likely represent deities tied to water, fertility, and the cyclical renewal of the earth.</p>
+          <p>Archaeological analysis of residue along the interior reveals traces of organic compounds consistent with maize beer (chicha), a substance often poured as an offering during agricultural rites. Such libations linked human sustenance to divine generosity — a symbolic exchange between people and the natural forces sustaining them.</p>
+          <p>Excavations at Cahuachi, the major ceremonial center of the Nazca culture, revealed hundreds of similar vessels placed deliberately in temple precincts, ritual pits, and elite burials. Their intentional breakage or burial suggests closure rituals, marking the end of ceremonies and the return of the object’s spirit to the earth. The vase thus stands as a microcosm of Nazca cosmology — a world animated by dualities: life and death, dryness and fertility, sky and soil.</p>
+          
+          <h4>Comparative Note</h4>
+          <p>${archItems[1].data.Comparison}</p>
+          
+          <div class="courtesy-note">
+            On Display Courtesy Of: The National Museum of Archaeology, Anthropology and History of Peru (MNAAHP), Lima.
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="history-item">
+      <div class="history-item-header">
+        <h2>Egyptian Funerary Mask (Inspired by Tutankhamun)</h2>
+        <div class="curator-note">Interpretation by Dr. Cassian Rho, Field Archaeologist</div>
+      </div>
+      <div class="history-item-body">
+        <div class="history-item-image">
+          <img src="${archItems[2].img}" alt="${archItems[2].alt}">
+        </div>
+        <div class="history-item-facts">
+          <h3>Artifact Facts</h3>
+          ${buildFactsList(archItems[2].data)}
+        </div>
+        <div class="history-item-interpretation">
+          <h3>What the Experts Believe</h3>
+          <p>This funerary mask exemplifies the artistic and spiritual grandeur of Egypt’s New Kingdom. Crafted to cover the face and shoulders of the deceased, it transformed the mortal visage into that of a divine being, ensuring recognition and protection in the afterlife. The golden surface — symbolizing the imperishable flesh of the gods — shimmers with cosmic symbolism: lapis lazuli for the heavens, obsidian for eternal night, and quartz for purity of spirit.</p>
+          <p>The mask’s purpose extended beyond ornamentation. It functioned as a theological tool — a mediator between body and soul. Through the ritual of mummification, Egyptian artisans imbued such objects with sacred agency. Every inlay and pigment carried layered meaning: blue stripes on the nemes headdress echoed the celestial order; the inlaid eyes, wide and symmetrical, invoked divine vigilance.</p>
+          <p>This specific example reflects stylistic conventions of the 18th Dynasty, during the Amarna-influenced period when art blended realism with divine idealism. Although inspired by the famous mask of Tutankhamun, it represents a broader royal tradition — an archetype of Egyptian mortuary belief. Objects like this were placed within nested coffins, alongside canopic jars, amulets, and jewelry, forming an ecosystem of protection that preserved both the physical and spiritual integrity of the deceased.</p>
+          
+          <h4>Comparative Note</h4>
+          <p>${archItems[2].data.Comparison}</p>
+          
+          <div class="courtesy-note">
+            On Display Courtesy Of: The Grand Egyptian Museum (GEM) Collection (Conceptual Replica).
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="history-item">
+      <div class="history-item-header">
+        <h2>Fang Ritual Mask (Ngil Society)</h2>
+        <div class="curator-note">Interpretation by Dr. Elara Mohn, Cultural Semiotician</div>
+      </div>
+      <div class="history-item-body">
+        <div class="history-item-image">
+          <img src="${anthItems[0].img}" alt="${anthItems[0].alt}">
+        </div>
+        <div class="history-item-facts">
+          <h3>Artifact Facts</h3>
+          ${buildFactsList(anthItems[0].data)}
+        </div>
+        <div class="history-item-interpretation">
+          <h3>What the Experts Believe</h3>
+          <p>This object poses a profound challenge to the very idea of a museum. We see a "mask," an object of art prized for its abstract form—a form that heavily influenced European modernists like Picasso. But to see it only as art is a colonial act. Its truth lies not in its aesthetics, but in its function. This was not a mask; it was an agent of justice.</p>
+          <h4>A Semiotic Reading</h4>
+          <p>This vessel was created for the Ngil society, a judicial and social institution among the Fang. Its purpose was to embody an ancestor spirit during initiation and purification rites, rooting out wrongdoing and maintaining social harmony. Its symbolic language is potent: The white kaolin is the most important symbol. It does not represent a face, but the spiritual realm. It signifies purity, light, and the presence of the ancestral dead. The elongated face, serene and detached, is not a human portrait. It is a visual metaphor for the all-seeing, timeless wisdom of the ancestors it represents. Evidence of soot and abrasion from handling confirms this was not a static object. It was a dynamic tool, danced by firelight, used to dispense justice and transition initiates into adulthood.</p>
+          
+          <h4>Cautionary Note on Interpretation</h4>
+          <blockquote>As a semiotician who advocates for decolonial museology, I must ask: What have we done by placing it here? We have transformed a living agent of social power into a silent, aesthetic "artifact." We have severed it from its meaning. In admiring its beauty, we must also acknowledge the cultural context that was broken to bring it to us.</blockquote>
+          
+          <div class="courtesy-note">
+            On Display Courtesy Of: The Musée du Quai Branly - Jacques Chirac (Conceptual Study).
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="history-item">
+      <div class="history-item-header">
+        <h2>Tlingit Ceremonial Staff: An Emblem of Living Heritage</h2>
+        <div class="curator-note">Interpretation by Dr. Elara Mohn, Cultural Semiotician</div>
+      </div>
+      <div class="history-item-body">
+        <div class="history-item-image">
+          <img src="${anthItems[1].img}" alt="${anthItems[1].alt}">
+        </div>
+        <div class="history-item-facts">
+          <h3>Artifact Facts</h3>
+          ${buildFactsList(anthItems[1].data)}
+        </div>
+        <div class="history-item-interpretation">
+          <h3>What the Experts Believe</h3>
+          <p>This object is a powerful document of Tlingit law, cosmology, and social structure. Carved from red cedar—a sacred, life-giving material in Tlingit culture—and inlaid with precious abalone shell, this staff was an instrument of power.</p>
+          <h4>Reading the Symbols</h4>
+          <p>From a semiotic perspective, this staff is a visual language. Its primary function was communicative. Held by a chief or shaman during a potlatch—a complex ceremony of governance, wealth redistribution, and storytelling—this object would assert its owner's status and ancestral rights. The zoomorphic figure at its crest (a Raven, Bear, or Eagle) is not merely artistic. It is a specific crest, a legal and genealogical "signature" that identifies the clan and its connection to the spirit world. The abalone inlays, catching the firelight, would signify prestige, wealth, and the presence of supernatural power. The polished grip, noted in its file, is the physical trace of its ritual life, a sign of repeated human contact and purpose.</p>
+          
+          <h4>Cautionary Note on Interpretation</h4>
+          <blockquote>The "truth" of this object does not lie in its static form. Its truth is in its performance at a potlatch... Our records state it was "Collected from a Tlingit clan house." As a museum advocating for decolonial practice, we must confront this. This is not a relic of a dead past; it is a living document of ancestral heritage. Its presence here, separated from the clan it represents, raises profound ethical questions about ownership and interpretation. We present it not as a conquered "artifact," but as an ambassador of a living culture to whom its story truly belongs.</blockquote>
+          
+          <div class="courtesy-note">
+            On Display Courtesy Of: The Royal BC Museum, Victoria (Repatriation Dialogue Study).
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="history-item">
+      <div class="history-item-header">
+        <h2>The Soul's Journey: A Paracas Funerary Tapestry</h2>
+        <div class="curator-note">Interpretation by Dr. Elara Mohn, Cultural Semiotician</div>
+      </div>
+      <div class="history-item-body">
+        <div class="history-item-image">
+          <img src="${anthItems[2].img}" alt="${anthItems[2].alt}">
+        </div>
+        <div class="history-item-facts">
+          <h3>Artifact Facts</h3>
+          ${buildFactsList(anthItems[2].data)}
+        </div>
+        <div class="history-item-interpretation">
+          <h3>What the Experts Believe</h3>
+          <p>We stand before a textile of extraordinary rarity and profound symbolic depth. Preserved by the arid climate of the Paracas Peninsula, this tapestry was not made for the living, but for the dead. It served as a final, sacred wrapping for an elite mummy bundle, a practice central to Paracas ancestor worship.</p>
+          <h4>Reading the Narrative</h4>
+          <p>As a semiotician, I interpret this textile not as a simple cloth, but as a complex visual narrative—a "map" for the soul's journey. The weavers, using a sophisticated double-cloth technique, have created a language of symbols. The most prominent motifs are the "supernatural beings in flight." These are not static figures; they are dynamic, caught in a state of transformation. They represent the soul's arduous journey from the physical world to the divine ancestral realm. They are visual guides, spiritual protectors, or perhaps even depictions of the deceased mid-transformation.</p>
+          <h4>The Fabric of Belief</h4>
+          <p>The materials themselves are symbolic. The cotton warp provides structure, while the precious, brightly dyed camelid (alpaca or vicuña) wool weft carries the sacred story. The vibrant cochineal red and indigo blue were difficult-to-produce pigments, signifying high status and ritual importance. The "truth" of this object lies in its performance. The act of weaving it was an act of ritual preparation. The act of wrapping the body was the final, critical step in transforming the deceased into a divine ancestor, protected by the very symbols encoded in the cloth. It is a testament to a culture that viewed death not as an end, but as a complex, mapped, and sacred journey.</p>
+          
+          <div class="courtesy-note">
+            On Display Courtesy Of: The British Museum (Conceptual Study).
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <button class="back-to-collections-btn" onclick="showSection('collections')">
+      &larr; Back to Collections
+    </button>
+  `;
+  return html;
+}
+
+
+
+// MODAL LOGIC
 function openModal(imgSrc, itemName) {
     const modal = document.getElementById('item-modal');
     const modalImg = document.getElementById('modal-img');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
 
-    // Trouver l'élément dans le DOM du magasin pour récupérer la description
+    // Find the element DOm
     const itemElement = document.querySelector(`.souvenir-item[title="${itemName}"]`);
     let desc = "No description available.";
     
     if(itemElement) {
-        // La description est dans la première balise <p> après <h3>
+        // Description of the first <p> after <h3>
         const pElement = itemElement.querySelector('p:not(.price)');
         if(pElement) {
             desc = pElement.innerText;
@@ -324,9 +542,8 @@ window.onclick = function(e) {
   }
 };
 
-/* CORRECTION IMPORTANTE : Afficher la section 'home' au chargement */
+/* Display the home sction */
 document.addEventListener('DOMContentLoaded', () => {
-    // S'assurer que la section 'home' est visible par défaut au chargement
     showSection('home');
 });
 
@@ -335,3 +552,48 @@ function addToCart(itemId, name, price) {
     console.log(`Item added to cart: ${name} (${price})`);
     alert(`Added ${name} to your virtual cart!`);
 }
+
+
+// Modal (Phase 1)
+
+(function(){
+  const modal      = document.getElementById('modal'); // Targets the new #modal
+  const modalBody  = document.getElementById('modal-body');
+  const closeBtn   = modal.querySelector('.close-modal');
+  let lastTrigger  = null;
+
+  function openFrom(selector, trigger){
+    const src = document.querySelector(selector);
+    if (!src) { console.warn('Missing modal content:', selector); return; }
+    modalBody.innerHTML = src.innerHTML;        // inject text HTML
+    modal.style.display = 'flex'; // Use flex to center
+    lastTrigger = trigger || null;
+    closeBtn.focus();
+    document.body.style.overflow = 'hidden';    // no scroll under modal
+  }
+
+  function closeModal(){
+    modal.style.display = 'none';
+    modalBody.innerHTML = '';
+    document.body.style.overflow = '';
+    if (lastTrigger) lastTrigger.focus();
+  }
+
+  // open on any element with data-modal-target
+  document.addEventListener('click', (e)=>{
+    const trigger = e.target.closest('[data-modal-target]');
+    if (trigger){
+      e.preventDefault();
+      openFrom(trigger.getAttribute('data-modal-target'), trigger);
+      return;
+    }
+    // Updated to check for the correct modal
+    if (e.target === modal || e.target.closest('#modal .close-modal')) {
+        closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+  });
+})();

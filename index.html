@@ -86,11 +86,20 @@
   </footer>
 
   <div id="item-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <img id="modal-img" src="images/shop" alt="">
+      <h2 id="modal-title">&nbsp;</h2>
+      <p id="modal-desc"></p>
+    </div>
+  </div>
+
+
+  <div class="modal" id="modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-title-collections">
   <div class="modal-content">
-    <span class="close-modal" onclick="closeModal()">&times;</span>
-    <img id="modal-img" src="images/shop" alt="">
-    <h2 id="modal-title">&nbsp;</h2>
-    <p id="modal-desc"></p>
+    <h2 id="modal-title-collections" style="display:none;">Collections Information</h2> 
+    <button class="close-modal" aria-label="Close">&times;</button>
+    <div id="modal-body"></div> 
   </div>
 </div>
 
